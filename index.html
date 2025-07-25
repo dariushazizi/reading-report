@@ -1,0 +1,255 @@
+
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Dariush Azizi - Data Science Study Progress</title>
+                    <script src="https://cdn.tailwindcss.com"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+                    <style>
+                        body {
+                            background-color: #0d1117;
+                            background-image: 
+                                linear-gradient(rgba(20, 184, 166, 0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(20, 184, 166, 0.1) 1px, transparent 1px);
+                            background-size: 2rem 2rem;
+                            font-family: 'Fira Code', monospace;
+                            color: #a7f3d0;
+                        }
+                        .cyber-card { background-color: rgba(20, 184, 166, 0.05); border: 1px solid rgba(52, 211, 153, 0.3); backdrop-filter: blur(10px); }
+                        .cyber-glow { text-shadow: 0 0 8px #34d399, 0 0 12px #34d399; }
+                        .cyber-select { background-color: #0d1117; border-color: #34d399; color: #a7f3d0; }
+                        .report-tab { cursor: pointer; padding: 0.5rem 1rem; border-bottom: 2px solid transparent; }
+                        .report-tab-active { border-bottom-color: #34d399; color: #34d399; text-shadow: 0 0 5px #34d399; }
+                        .pizza-slice { position: absolute; width: 50%; height: 50%; background: #f97316; transform-origin: 100% 100%; border: 1px solid #fdba74; opacity: 0; }
+                    </style>
+                </head>
+                <body class="p-4 md:p-8">
+                    <div class="max-w-7xl mx-auto space-y-8">
+                        <header class="text-center border-b-2 border-teal-500/30 pb-4">
+                            <h1 class="text-4xl md:text-5xl font-bold cyber-glow">Dariush Azizi's Ph.D. Prep Log</h1>
+                            <p class="mt-2 text-teal-300">Live Progress Dashboard as of 7/25/2025</p>
+                        </header>
+                        <main class="space-y-8">
+                 <div class="space-y-8 cyber-theme">
+                    <!-- Mentor Report & Pizza Tracker -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="cyber-card p-6 rounded-xl lg:col-span-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-bold cyber-glow">Mentor's Report</h3>
+                                
+                            </div>
+                            <div class="flex space-x-4 border-b border-teal-500/30 mb-4">
+                                <button class="report-tab report-tab-active" data-report="daily">Daily</button>
+                                <button class="report-tab" data-report="weekly">Weekly</button>
+                                <button class="report-tab" data-report="monthly">Monthly</button>
+                            </div>
+                            <div id="mentor-report-content" class="whitespace-pre-wrap text-sm h-32">Today's Progress
+-----------------------------------
+Total Study Time: 210 minutes
+Total Sessions:   1
+Topics Covered:   fundumentals of datascience with python</div>
+                        </div>
+                        <div class="cyber-card p-6 rounded-xl text-center flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold mb-4 cyber-glow">Pizza Debt</h3>
+                            <div id="pizza-tracker" class="relative w-32 h-32 mx-auto rounded-full bg-yellow-400 border-2 border-yellow-300"><div class="pizza-slice" style="transform: rotate(0deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(45deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(90deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(135deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(180deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(225deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(270deg) skew(45deg);"></div><div class="pizza-slice" style="transform: rotate(315deg) skew(45deg);"></div></div>
+                            <p class="mt-4 text-lg">Missed Days: <span id="pizza-slices" class="font-bold cyber-glow">0</span> / 8</p>
+                            <p class="mt-1 text-xl">Pizzas Owed: <span id="pizzas-owed" class="font-bold cyber-glow text-red-400">0</span></p>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                        <div class="cyber-card p-4 rounded-xl text-center"><p class="text-sm">Total Sessions</p><p id="kpi-total-sessions" class="text-3xl font-bold cyber-glow">3</p></div>
+                        <div class="cyber-card p-4 rounded-xl text-center"><p class="text-sm">Avg. Duration</p><p id="kpi-avg-duration" class="text-3xl font-bold cyber-glow">150 min</p></div>
+                        <div class="cyber-card p-4 rounded-xl text-center"><p class="text-sm">Busiest Day</p><p id="kpi-busiest-day" class="text-3xl font-bold cyber-glow">Thu</p></div>
+                        <div class="cyber-card p-4 rounded-xl text-center"><p class="text-sm">Current Streak</p><p id="kpi-current-streak" class="text-3xl font-bold cyber-glow">2 days</p></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="cyber-card p-6 rounded-xl"><h3 class="font-semibold mb-4">Study Time Per Day (Last 30 Days)</h3><canvas id="time-per-day-chart" style="box-sizing: border-box; display: block; height: 254px; width: 509px;" width="637" height="318"></canvas></div>
+                        <div class="cyber-card p-6 rounded-xl"><h3 class="font-semibold mb-4">Topic Distribution (by Time Spent)</h3><div class="max-w-xs mx-auto"><canvas id="topic-distribution-chart" style="box-sizing: border-box; display: block; height: 320px; width: 320px;" width="400" height="400"></canvas></div></div>
+                    </div>
+
+                    <!-- Pace Tracker -->
+                    <div class="cyber-card p-6 rounded-xl">
+                        <div class="flex justify-between items-center mb-4"><h3 class="font-semibold">Reading Pace Tracker</h3><select id="pace-tracker-select" class="text-sm rounded-md border-slate-300 focus:ring-indigo-500 focus:border-indigo-500 cyber-select"><option value="1753441125193">Learning Data Science</option><option value="1753441244166">Software Engineering for Data Scientists</option></select></div>
+                        <canvas id="pace-tracker-chart" style="box-sizing: border-box; display: block; height: 550px; width: 1100px;" width="1376" height="688"></canvas>
+                    </div>
+                 </div>
+            </main>
+                    </div>
+                    <script>
+                const embeddedLogData = {"books":[{"id":"1753441125193","title":"Learning Data Science","author":"Sam Lau [O’Reilly]","topic":"fundumentals of datascience with python","status":"Currently Studying","sessions":[{"id":"1753441156898","date":"2025-07-24","duration":"180","pagesRead":"51-89","summary":"Chapter 4-5: why my bus always late?"},{"id":"1753455491585","date":"2025-07-25","duration":"210","pagesRead":"79-114","summary":"Chapter 6: what is dataframe and how to manipulate it with pandas."}]},{"id":"1753441244166","title":"Software Engineering for Data Scientists","author":"Catherine Nelson [O’Reilly]","topic":"clean coding with python for data science","status":"Currently Studying","sessions":[{"id":"1753441283216","date":"2025-07-24","duration":"60","pagesRead":"1-12","summary":"Chapter1: what is good code?"}]}],"settings":{"pizzaDebtPaid":0}};
+                let timePerDayChart, topicDistributionChart, paceTrackerChart;
+                
+                // --- EMBEDDED FUNCTIONS ---
+                function calculatePizzaDebt(allSessions, paidDebt = 0) {
+            if (allSessions.length === 0) return { slices: 0, pizzasOwed: 0, totalMissedDays: 0 };
+            
+            const sortedDates = [...new Set(allSessions.map(s => s.date))].sort();
+            const firstDay = new Date(sortedDates[0]);
+            const today = new Date();
+            
+            const totalDaysSinceStart = Math.ceil((today - firstDay) / (1000 * 60 * 60 * 24));
+            const totalStudyDays = sortedDates.length;
+            const totalMissedDays = totalDaysSinceStart - totalStudyDays;
+            
+            const currentDebt = totalMissedDays - paidDebt;
+            const pizzasOwed = Math.floor(currentDebt / 8);
+            const slices = currentDebt % 8;
+
+            return { slices, pizzasOwed, totalMissedDays };
+        }
+                function generateDailyReport(allSessions) {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const todaySessions = allSessions.filter(s => s.date === todayStr);
+            if (todaySessions.length === 0) return "No study sessions logged for today.";
+
+            const dailyMinutes = todaySessions.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0);
+            const dailyTopics = [...new Set(todaySessions.map(s => s.topic))];
+            return `Today's Progress\n-----------------------------------\nTotal Study Time: ${dailyMinutes} minutes\nTotal Sessions:   ${todaySessions.length}\nTopics Covered:   ${dailyTopics.join(', ') || 'None'}`;
+        }
+                function generateWeeklyReport(allSessions) {
+            const today = new Date();
+            const sevenDaysAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+            const weeklySessions = allSessions.filter(s => new Date(s.date) >= sevenDaysAgo);
+            const weeklyMinutes = weeklySessions.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0);
+            const weeklyHours = (weeklyMinutes / 60).toFixed(1);
+            const weeklyTopics = [...new Set(weeklySessions.map(s => s.topic))];
+            const weeklyDaysStudied = [...new Set(weeklySessions.map(s => s.date))].length;
+            return `Report: Last 7 Days\n-----------------------------------\nTotal Study Time: ${weeklyHours} hours\nTotal Sessions:   ${weeklySessions.length}\nConsistency:      Studied on ${weeklyDaysStudied} of the last 7 days\nTopics Covered:   ${weeklyTopics.join(', ') || 'None'}`;
+        }
+                function generateMonthlyReport(allSessions) {
+            const today = new Date();
+            const thirtyDaysAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30);
+            const monthlySessions = allSessions.filter(s => new Date(s.date) >= thirtyDaysAgo);
+            const monthlyMinutes = monthlySessions.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0);
+            const monthlyHours = (monthlyMinutes / 60).toFixed(1);
+            const monthlyTopics = [...new Set(monthlySessions.map(s => s.topic))];
+            const monthlyDaysStudied = [...new Set(monthlySessions.map(s => s.date))].length;
+            return `Report: Last 30 Days\n-----------------------------------\nTotal Study Time: ${monthlyHours} hours\nTotal Sessions:   ${monthlySessions.length}\nConsistency:      Studied on ${monthlyDaysStudied} of the last 30 days\nTopics Covered:   ${monthlyTopics.join(', ') || 'None'}`;
+        }
+                
+                function renderPaceTracker(bookId, data) {
+                    const book = data.find(b => b.id === bookId);
+                    if (!book) return;
+
+                    const sortedSessions = [...book.sessions].sort((a, b) => new Date(a.date) - new Date(b.date));
+                    let cumulativePages = 0;
+                    const paceData = sortedSessions.map(s => {
+                        const range = String(s.pagesRead).split('-').map(p => parseInt(p.trim(), 10));
+                        let pagesReadInSession = 0;
+                        if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
+                            pagesReadInSession = range[1] - range[0] + 1;
+                        } else if (!isNaN(range[0])) {
+                            pagesReadInSession = 1;
+                        }
+                        cumulativePages += pagesReadInSession;
+                        return { x: s.date, y: cumulativePages };
+                    });
+
+                    const paceCtx = document.getElementById('pace-tracker-chart').getContext('2d');
+                    if (paceTrackerChart) paceTrackerChart.destroy();
+                    paceTrackerChart = new Chart(paceCtx, {
+                        type: 'line',
+                        data: {
+                            datasets: [{
+                                label: 'Cumulative Pages Read',
+                                data: paceData,
+                                borderColor: '#34d399',
+                                backgroundColor: 'rgba(52, 211, 153, 0.2)',
+                                fill: true,
+                                tension: 0.1,
+                                pointBackgroundColor: '#a7f3d0',
+                                pointRadius: 4
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: { type: 'time', time: { unit: 'day', tooltipFormat: 'MMM dd, yyyy' }, grid: { color: 'rgba(52, 211, 153, 0.2)' } },
+                                y: { beginAtZero: true, title: { display: true, text: 'Pages' }, grid: { color: 'rgba(52, 211, 153, 0.2)' } }
+                            },
+                            responsive: true,
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                }
+
+                // --- MAIN SCRIPT FOR STATIC PAGE ---
+                document.addEventListener('DOMContentLoaded', () => {
+                    const { books, settings } = embeddedLogData;
+                    const allSessions = books.flatMap(b => b.sessions.map(s => ({...s, topic: b.topic || 'Uncategorized'})));
+                    const mentorReportContentEl = document.getElementById('mentor-report-content');
+                    if (allSessions.length === 0) { mentorReportContentEl.textContent = "No data available."; return; }
+
+                    const reports = { daily: generateDailyReport(allSessions), weekly: generateWeeklyReport(allSessions), monthly: generateMonthlyReport(allSessions) };
+                    mentorReportContentEl.textContent = reports.daily;
+                    document.querySelectorAll('.report-tab').forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            document.querySelector('.report-tab-active').classList.remove('report-tab-active');
+                            tab.classList.add('report-tab-active');
+                            mentorReportContentEl.textContent = reports[tab.dataset.report];
+                        });
+                    });
+
+                    const { slices, pizzasOwed } = calculatePizzaDebt(allSessions, settings.pizzaDebtPaid);
+                    document.getElementById('pizza-slices').textContent = slices;
+                    document.getElementById('pizzas-owed').textContent = pizzasOwed;
+                    const pizzaTrackerEl = document.getElementById('pizza-tracker');
+                    pizzaTrackerEl.innerHTML = '';
+                    for(let i=0; i < 8; i++) {
+                        const sliceEl = document.createElement('div');
+                        sliceEl.className = 'pizza-slice';
+                        sliceEl.style.transform = `rotate(${i * 45}deg) skew(45deg)`;
+                        if (i < slices) sliceEl.style.opacity = '1';
+                        pizzaTrackerEl.appendChild(sliceEl);
+                    }
+
+                    document.getElementById('kpi-total-sessions').textContent = allSessions.length;
+                    const totalMinutes = allSessions.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0);
+                    const avgDuration = allSessions.length > 0 ? (totalMinutes / allSessions.length).toFixed(0) : 0;
+                    document.getElementById('kpi-avg-duration').textContent = `${avgDuration} min`;
+                    const dayCounts = allSessions.reduce((acc, s) => { const day = new Date(s.date).toLocaleDateString('en-US', { weekday: 'short' }); acc[day] = (acc[day] || 0) + 1; return acc; }, {});
+                    const busiestDay = Object.keys(dayCounts).length > 0 ? Object.entries(dayCounts).sort((a, b) => b[1] - a[1])[0][0] : 'N/A';
+                    document.getElementById('kpi-busiest-day').textContent = busiestDay;
+                    const uniqueDates = [...new Set(allSessions.map(s => s.date))].sort();
+                    let currentStreak = 0;
+                    if (uniqueDates.length > 0) {
+                        let lastDate = new Date(uniqueDates[uniqueDates.length - 1]);
+                        const todayDate = new Date(new Date().setHours(0,0,0,0));
+                        const lastSessionDate = new Date(new Date(lastDate).setHours(0,0,0,0));
+                        if(todayDate.getTime() === lastSessionDate.getTime() || todayDate.getTime() - lastSessionDate.getTime() === 86400000) {
+                            currentStreak = 1;
+                            for (let i = uniqueDates.length - 2; i >= 0; i--) {
+                                const currentDate = new Date(uniqueDates[i]);
+                                const diff = (lastDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24);
+                                if (diff === 1) { currentStreak++; lastDate = currentDate; } else if (diff > 1) { break; }
+                            }
+                        }
+                    }
+                    document.getElementById('kpi-current-streak').textContent = `${currentStreak} days`;
+                    Chart.defaults.font.family = "'Fira Code', monospace"; Chart.defaults.color = '#a7f3d0'; Chart.defaults.borderColor = 'rgba(52, 211, 153, 0.2)';
+                    const last30Days = {};
+                    for(let i=0; i<30; i++) { const d = new Date(); d.setDate(d.getDate() - i); last30Days[d.toISOString().split('T')[0]] = 0; }
+                    allSessions.forEach(s => { const date = s.date; if(last30Days.hasOwnProperty(date)) { last30Days[date] += (parseInt(s.duration) || 0); } });
+                    const timeCtx = document.getElementById('time-per-day-chart').getContext('2d');
+                    timePerDayChart = new Chart(timeCtx, { type: 'bar', data: { labels: Object.keys(last30Days).reverse(), datasets: [{ label: 'Minutes Studied', data: Object.values(last30Days).reverse(), backgroundColor: 'rgba(52, 211, 153, 0.5)', borderColor: 'rgba(52, 211, 153, 1)', borderWidth: 1 }] }, options: { scales: { x: { type: 'time', time: { unit: 'day' }, grid: { color: 'rgba(52, 211, 153, 0.2)' } }, y: { beginAtZero: true, grid: { color: 'rgba(52, 211, 153, 0.2)' } } }, responsive: true, plugins: { legend: { display: false } } } });
+                    const timeByTopic = allSessions.reduce((acc, s) => { acc[s.topic] = (acc[s.topic] || 0) + (parseInt(s.duration) || 0); return acc; }, {});
+                    const topicLabels = Object.keys(timeByTopic); const topicData = Object.values(timeByTopic);
+                    const topicCtx = document.getElementById('topic-distribution-chart').getContext('2d');
+                    topicDistributionChart = new Chart(topicCtx, { type: 'doughnut', data: { labels: topicLabels, datasets: [{ label: 'Time by Topic', data: topicData, backgroundColor: ['#14b8a6', '#0891b2', '#6366f1', '#a78bfa', '#ec4899', '#f472b6', '#22d3ee'], borderColor: '#0d1117', hoverOffset: 4 }] }, options: { responsive: true, plugins: { legend: { position: 'top', labels: { color: '#a7f3d0' } } } } });
+                    const paceSelect = document.getElementById('pace-tracker-select');
+                    paceSelect.innerHTML = books.map(b => `<option value="${b.id}">${b.title}</option>`).join('');
+                    if (paceSelect.value) { renderPaceTracker(paceSelect.value, books); }
+                    paceSelect.addEventListener('change', (e) => renderPaceTracker(e.target.value, books));
+                });
+            </script>
+                </body>
+                </html>
+            

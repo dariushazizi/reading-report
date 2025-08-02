@@ -1,0 +1,67 @@
+{
+  "books": [
+    {
+      "id": "1753441125193",
+      "title": "Learning Data Science",
+      "author": "Sam Lau [O’Reilly]",
+      "topic": "fundumentals of datascience with python",
+      "status": "Currently Studying",
+      "sessions": [
+        {
+          "id": "1753441156898",
+          "date": "2025-07-24",
+          "duration": "180",
+          "pagesRead": "51-89",
+          "summary": "Chapter 4-5: why my bus always late?"
+        },
+        {
+          "id": "1753455491585",
+          "date": "2025-07-25",
+          "duration": "210",
+          "pagesRead": "79-114",
+          "summary": "Chapter 6: what is dataframe and how to manipulate it with pandas."
+        },
+        {
+          "id": "1753530362425",
+          "date": "2025-07-26",
+          "duration": "135",
+          "pagesRead": "115-138",
+          "summary": "Chapter7: working with SQL and relations."
+        },
+        {
+          "id": "1753773088347",
+          "date": "2025-07-29",
+          "duration": "180",
+          "pagesRead": "139-162",
+          "summary": "Chapter 8: Wrangling Files"
+        },
+        {
+          "id": "1754161181828",
+          "date": "2025-08-02",
+          "duration": "180",
+          "pagesRead": "163-194",
+          "summary": "Chapter 9: Wrangling Dataframes"
+        }
+      ]
+    },
+    {
+      "id": "1753441244166",
+      "title": "Software Engineering for Data Scientists",
+      "author": "Catherine Nelson [O’Reilly]",
+      "topic": "clean coding with python for data science",
+      "status": "Currently Studying",
+      "sessions": [
+        {
+          "id": "1753441283216",
+          "date": "2025-07-24",
+          "duration": "60",
+          "pagesRead": "1-12",
+          "summary": "Chapter1: what is good code?"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "pizzaDebtPaid": 0
+  }
+}
